@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Small nodejs package that will make building chatbots easier.",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/fb50596/convo-platform.git"
@@ -19,7 +16,7 @@
   "author": "Filip Bacinger",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/fb50596/chatbot-platforma/issues"
+    "url": "https://gitlab.com/fb50596/convo-platform/issues"
   },
-  "homepage": "https://gitlab.com/fb50596/chatbot-platforma#readme"
+  "homepage": "https://gitlab.com/fb50596/convo-platform#readme"
 }
