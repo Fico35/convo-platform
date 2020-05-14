@@ -1,22 +1,11 @@
 class Chatbot {
     // ----- CONSTRUCTOR ----- //
-    constructor(locale, intentExtractionFunction = null) {
-        if (locale == null) { // == matches null and undefined
-            throw new Error("Please define a locale for your chatbot.");
+    constructor(intentExtractionFunction) {
+        if (intentExtractionFunction == null) { // == matches null and undefined
+            throw new Error("Please define an intent extracting function for your chatbot.");
         }
-        this.locale = locale;
+        this.extractIntent = intentExtractionFunction;
         this.allStates = new Map();
-        if (intentExtractionFunction === null) {
-            // no nlp provided -> use default (node-nlp)
-            const { NlpManager } = require('node-nlp');
-            this.nlp = new NlpManager();    // node-nlp
-            this.extractIntent = async function(message) {
-                return this.nlp.process(this.locale, message);
-            }
-        } else {
-            // intent extraction function is provided
-            this.extractIntent = intentExtractionFunction;
-        }
     }
 
     // ----- ALL STATES ----- //
