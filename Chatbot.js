@@ -34,10 +34,7 @@ class Chatbot {
     }
 
     // ----- CURRENT STATE ----- //
-    get currentState() {
-        return this.currentState;
-    }
-    set currentState(stateName) {
+    setCurrentState(stateName) {
         if (this.allStates.has(stateName)) {
             this.currentState = this.allStates.get(stateName);
         } else {

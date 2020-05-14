@@ -34,14 +34,14 @@ class ChatbotState {
 
     // ----- STATE HANDLER ----- //
     handle(intent) {
-        let response;
+        let response = {};
         // call action for intent with reference to state as parameter
         if (this.actions.has(intent)) {
             this.actions.get(intent)(this);
         }
 
         // get all answers for intent
-        response.answers = null;
+        response.answers = [];
         if (this.answers.has(intent)) {
             let answerArray = this.answers.get(intent); // only one get() call
             for (let i = 0; i < answerArray.length; i++) {
