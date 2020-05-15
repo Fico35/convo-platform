@@ -57,13 +57,13 @@ class Chatbot {
         let exportJson = `[`;
         for (let [name, state] of this.allStates) {
             // start STATE
-            exportJson += `{"name":"${name}",`;
+            exportJson += `{"name":"${name.replace(/\"/g, "\\\"")}",`;
             // start ANSWERS
             exportJson += `"answers":[`;
             for (let [intent, answers] of state.answers) {
-                exportJson += `{"intent":"${intent}","answers":[`;
+                exportJson += `{"intent":"${intent.replace(/\"/g, "\\\"")}","answers":[`;
                 for (let ans of answers) {
-                    exportJson += `"${ans}",`;
+                    exportJson += `"${ans.replace(/\"/g, "\\\"")}",`;
                 }
                 exportJson = exportJson.slice(0, -1); // remove last comma
                 exportJson += `]},`;
@@ -73,9 +73,9 @@ class Chatbot {
             // start SUGGESTIONS
             exportJson += `"suggestions":[`;
             for (let [intent, suggestions] of state.suggestions) {
-                exportJson += `{"intent":"${intent}","suggestions":[`;
+                exportJson += `{"intent":"${intent.replace(/\"/g, "\\\"")}","suggestions":[`;
                 for (let sugg of suggestions) {
-                    exportJson += `"${sugg}",`;
+                    exportJson += `"${sugg.replace(/\"/g, "\\\"")}",`;
                 }
                 exportJson = exportJson.slice(0, -1); // remove last comma
                 exportJson += `]},`;
