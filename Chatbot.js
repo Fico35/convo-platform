@@ -38,9 +38,12 @@ class Chatbot {
         for (let i = 0; i < arr.length; i++) {
             // for each state
             let state = new ChatbotState(arr[i].name);
+            // read only answers and suggestions, skip actions
             for (let answerObject of arr[i].answers) {
-                // read only answers, skip actions
                 state.addAnswer(answerObject.intent, answerObject.answers);
+            }
+            for (let suggestionObject of arr[i].suggestions) {
+                state.addAnswer(suggestionObject.intent, suggestionObject.suggestions);
             }
             this.addState(state);
         }
@@ -51,11 +54,12 @@ class Chatbot {
         // give warning for untrusted sources
     }
     exportStates(callback = null) {
-        // ADD escaping " to \"
         let exportJson = `[`;
         for (let [name, state] of this.allStates) {
-            // iterate through all states
-            exportJson += `{"name":"${name}","answers":[`;
+            // start STATE
+            exportJson += `{"name":"${name}",`;
+            // start ANSWERS
+            exportJson += `"answers":[`;
             for (let [intent, answers] of state.answers) {
                 exportJson += `{"intent":"${intent}","answers":[`;
                 for (let ans of answers) {
@@ -65,7 +69,20 @@ class Chatbot {
                 exportJson += `]},`;
             }
             exportJson = exportJson.slice(0, -1); // remove last comma
-            exportJson += `]},`;
+            exportJson += `],`; // end ANSWERS
+            // start SUGGESTIONS
+            exportJson += `"suggestions":[`;
+            for (let [intent, suggestions] of state.suggestions) {
+                exportJson += `{"intent":"${intent}","suggestions":[`;
+                for (let sugg of suggestions) {
+                    exportJson += `"${sugg}",`;
+                }
+                exportJson = exportJson.slice(0, -1); // remove last comma
+                exportJson += `]},`;
+            }
+            exportJson = exportJson.slice(0, -1); // remove last comma
+            exportJson += `],`; // end SUGGESTIONS
+            exportJson += `},`; // end STATE
         }
         exportJson = exportJson.slice(0, -1); // remove last comma
         exportJson += `]`;
