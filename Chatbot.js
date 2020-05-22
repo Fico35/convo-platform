@@ -32,7 +32,7 @@ class Chatbot {
     }
 
     // ----- IMPORT/EXPORT ----- //
-    importStates(stateJson) {
+    async importStates(stateJson, callback = null) {
         const ChatbotState = require('./ChatbotState');
         let arr = JSON.parse(stateJson);
         for (let i = 0; i < arr.length; i++) {
@@ -47,13 +47,21 @@ class Chatbot {
             }
             this.addState(state);
         }
+        if (callback != null) {
+            callback();
+        }
     }
-    importStatesWithFunctions(stateJson) {
+
+    async importStatesWithFunctions(stateJson, callback = null) {
         // import all states from json (with actions)
         // import functions with new Function(functionString)
         // give warning for untrusted sources
+        if (callback != null) {
+            callback();
+        }
     }
-    exportStates(callback = null) {
+
+    async exportStates(callback = null) {
         let exportJson = `[`;
         for (let [name, state] of this.allStates) {
             // start STATE
@@ -87,17 +95,24 @@ class Chatbot {
         exportJson = exportJson.slice(0, -1); // remove last comma
         exportJson += `]`;
         // return Promise if callback is null
-        if (callback == null) {
-            return exportJson;
-        } else {
+        if (callback != null) {
             callback(exportJson);
+        } else {
+            return exportJson;
         }
     }
-    exportStatesWithFunctions(callback = null) {
+
+    async exportStatesWithFunctions(callback = null) {
+        let exportJson = ``;
         // return Promise if callback is null
         // (with actions)
         // export functions with Function.prototype.toString()
         // give warning for unsafe code
+        if (callback != null) {
+            callback(exportJson);
+        } else {
+            return exportJson;
+        }
     }
 
     // ----- HANDLER ----- //
@@ -107,11 +122,12 @@ class Chatbot {
             throw new Error("No state has been selected.");
         }
         let intent = await this.extractIntent(sentence);
+        let response = await this.currentState.handle(intent);
         // return Promise if callback is null
-        if (callback == null) {
-            return this.currentState.handle(intent);
+        if (callback != null) {
+            callback(response);
         } else {
-            callback(this.currentState.handle(intent));
+            return response;
         }
     }
 }

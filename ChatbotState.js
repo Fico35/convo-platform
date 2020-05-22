@@ -53,7 +53,7 @@ class ChatbotState {
     }
 
     // ----- STATE HANDLER ----- //
-    handle(intent) {
+    async handle(intent) {
         let response = {};
         response.intent = intent;
         
