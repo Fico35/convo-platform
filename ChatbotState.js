@@ -55,6 +55,8 @@ class ChatbotState {
     // ----- STATE HANDLER ----- //
     handle(intent) {
         let response = {};
+        response.intent = intent;
+        
         // call action for intent with reference to state as parameter
         if (this.actions.has(intent)) {
             this.actions.get(intent)(this);
