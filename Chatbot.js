@@ -4,6 +4,9 @@ class Chatbot {
         if (intentExtractionFunction == null) { // == matches null and undefined
             throw new Error("Please define an intent extracting function for your chatbot.");
         }
+        if (typeof intentExtractionFunction !== "function" && !(intentExtractionFunction instanceof Function)) {
+            throw new Error("Parameter given to chatbot is not a function.");
+        }
         this.extractIntent = intentExtractionFunction;
         this.allStates = new Map();
     }
@@ -52,49 +55,68 @@ class Chatbot {
         }
     }
 
-    async importStatesWithFunctions(stateJson, callback = null) {
-        // import all states from json (with actions)
-        // import functions with new Function(functionString)
-        // give warning for untrusted sources
+    async importStatesWithActions(stateJson, callback = null) {
+        const ChatbotState = require('./ChatbotState');
+        let arr = JSON.parse(stateJson);
+        for (let i = 0; i < arr.length; i++) {
+            // for each state
+            let state = new ChatbotState(arr[i].name);
+            // read actions, answers & suggestions
+            for (let actionObject of arr[i].actions) {
+                let funcTemp = new Function(actionObject.paramName, actionObject.functionCode);
+                state.addAction(actionObject.intent, funcTemp);
+            }
+            for (let answerObject of arr[i].answers) {
+                state.addAnswer(answerObject.intent, answerObject.answers);
+            }
+            for (let suggestionObject of arr[i].suggestions) {
+                state.addAnswer(suggestionObject.intent, suggestionObject.suggestions);
+            }
+            this.addState(state);
+        }
+        console.warn("This feature converts strings from JSON format into executable code. If the source of this is not trusted, it might be harmful or cause many errors. Please only use this if you know what you are doing!");
         if (callback != null) {
             callback();
         }
     }
 
     async exportStates(callback = null) {
-        let exportJson = `[`;
+        let stateArray = [];
         for (let [name, state] of this.allStates) {
             // start STATE
-            exportJson += `{"name":"${name.replace(/\"/g, "\\\"")}",`;
+            let stateString = `{"name":"${name.replace(/\"/g, "\\\"")}",`;
             // start ANSWERS
-            exportJson += `"answers":[`;
+            stateString += `"answers":[`;
+            let answerArray = [];
             for (let [intent, answers] of state.answers) {
-                exportJson += `{"intent":"${intent.replace(/\"/g, "\\\"")}","answers":[`;
-                for (let ans of answers) {
-                    exportJson += `"${ans.replace(/\"/g, "\\\"")}",`;
+                let answerString = `{"intent":"${intent.replace(/\"/g, "\\\"")}","answers":[`;
+                for (let i in answers) {
+                    answers[i] = `"${answers[i].replace(/\"/g, "\\\"")}"`;
                 }
-                exportJson = exportJson.slice(0, -1); // remove last comma
-                exportJson += `]},`;
+                answerString += answers.join(",");
+                answerString += `]}`;
+                answerArray.push(answerString);
             }
-            exportJson = exportJson.slice(0, -1); // remove last comma
-            exportJson += `],`; // end ANSWERS
+            stateString += answerArray.join(",");
+            stateString += `],`; // end ANSWERS
             // start SUGGESTIONS
-            exportJson += `"suggestions":[`;
+            stateString += `"suggestions":[`;
+            let suggestionArray = [];
             for (let [intent, suggestions] of state.suggestions) {
-                exportJson += `{"intent":"${intent.replace(/\"/g, "\\\"")}","suggestions":[`;
-                for (let sugg of suggestions) {
-                    exportJson += `"${sugg.replace(/\"/g, "\\\"")}",`;
+                let suggestionString = `{"intent":"${intent.replace(/\"/g, "\\\"")}","suggestions":[`;
+                for (let i in suggestions) {
+                    suggestions[i] = `"${suggestions[i].replace(/\"/g, "\\\"")}"`;
                 }
-                exportJson = exportJson.slice(0, -1); // remove last comma
-                exportJson += `]},`;
+                suggestionString += suggestions.join(",");
+                suggestionString += `]},`;
+                suggestionArray.push(suggestionString);
             }
-            exportJson = exportJson.slice(0, -1); // remove last comma
-            exportJson += `],`; // end SUGGESTIONS
-            exportJson += `},`; // end STATE
+            stateString += suggestionArray.join(",");
+            stateString += `]`; // end SUGGESTIONS
+            stateString += `}`; // end STATE
+            stateArray.push(stateString);
         }
-        exportJson = exportJson.slice(0, -1); // remove last comma
-        exportJson += `]`;
-        // return Promise if callback is null
+        let exportJson = `[` + stateArray.join(",") + `]`;
         if (callback != null) {
             callback(exportJson);
         } else {
@@ -102,12 +124,61 @@ class Chatbot {
         }
     }
 
-    async exportStatesWithFunctions(callback = null) {
-        let exportJson = ``;
-        // return Promise if callback is null
-        // (with actions)
-        // export functions with Function.prototype.toString()
-        // give warning for unsafe code
+    async exportStatesWithActions(callback = null) {
+        let stateArray = [];
+        for (let [name, state] of this.allStates) {
+            // start STATE
+            let stateString = `{"name":"${name.replace(/\"/g, "\\\"")}",`;
+            // start ACTIONS
+            stateString += `"actions":[`;
+            let actionArray = [];
+            for (let [intent, action] of state.actions) {
+                let funcString = action.toString();
+                let paramName = funcString.substring(funcString.search(/\(/) + 1, funcString.search(/\)/)).trim();
+                if (paramName.search(/,/) !== -1) {
+                    console.error(`Action function must only have 1 parameter (current chatbot state).\nSkipping action for intent "${intent}" in state "${name}".`);
+                    continue;
+                }
+                funcString = funcString.substring(funcString.search(/\{/) + 1, funcString.search(/\}/)).trim().replace(/\s*\n\s*/g, "");
+                actionArray.push(`{"intent":"${intent.replace(/\"/g, "\\\"")}",`
+                                + `"paramName":"${paramName.replace(/\"/g, "\\\"")}",`
+                                + `"functionCode":"${funcString.replace(/\"/g, "\\\"")}"}`);
+            }
+            stateString += actionArray.join(",");
+            stateString += `],`; // end ACTIONS
+            // start ANSWERS
+            stateString += `"answers":[`;
+            let answerArray = [];
+            for (let [intent, answers] of state.answers) {
+                let answerString = `{"intent":"${intent.replace(/\"/g, "\\\"")}","answers":[`;
+                for (let i in answers) {
+                    answers[i] = `"${answers[i].replace(/\"/g, "\\\"")}"`;
+                }
+                answerString += answers.join(",");
+                answerString += `]}`;
+                answerArray.push(answerString);
+            }
+            stateString += answerArray.join(",");
+            stateString += `],`; // end ANSWERS
+            // start SUGGESTIONS
+            stateString += `"suggestions":[`;
+            let suggestionArray = [];
+            for (let [intent, suggestions] of state.suggestions) {
+                let suggestionString = `{"intent":"${intent.replace(/\"/g, "\\\"")}","suggestions":[`;
+                for (let i in suggestions) {
+                    suggestions[i] = `"${suggestions[i].replace(/\"/g, "\\\"")}"`;
+                }
+                suggestionString += suggestions.join(",");
+                suggestionString += `]},`;
+                suggestionArray.push(suggestionString);
+            }
+            stateString += suggestionArray.join(",");
+            stateString += `]`; // end SUGGESTIONS
+            stateString += `}`; // end STATE
+            stateArray.push(stateString);
+        }
+        let exportJson = `[` + stateArray.join(",") + `]`;
+        console.warn("This feature converts executable into strings. If this code is reused without proper checks, it may cause many errors. Please only use this if you know what you are doing!");
         if (callback != null) {
             callback(exportJson);
         } else {
