@@ -91,7 +91,7 @@ class Chatbot {
             for (let [intent, answers] of state.answers) {
                 let answerString = `{"intent":"${intent.replace(/\"/g, "\\\"")}","answers":[`;
                 for (let i in answers) {
-                    answers[i] = `"${answers[i].replace(/\"/g, "\\\"")}"`;
+                    answers[i] = JSON.stringify(answers[i]);
                 }
                 answerString += answers.join(",");
                 answerString += `]}`;
@@ -152,7 +152,7 @@ class Chatbot {
             for (let [intent, answers] of state.answers) {
                 let answerString = `{"intent":"${intent.replace(/\"/g, "\\\"")}","answers":[`;
                 for (let i in answers) {
-                    answers[i] = `"${answers[i].replace(/\"/g, "\\\"")}"`;
+                    answers[i] = JSON.stringify(answers[i]);
                 }
                 answerString += answers.join(",");
                 answerString += `]}`;
@@ -178,7 +178,7 @@ class Chatbot {
             stateArray.push(stateString);
         }
         let exportJson = `[` + stateArray.join(",") + `]`;
-        console.warn("This feature converts executable into strings. If this code is reused without proper checks, it may cause many errors. Please only use this if you know what you are doing!");
+        console.warn("This feature converts executable code into strings. If this code is reused without proper checks, it may cause many errors. Please only use this if you know what you are doing!");
         if (callback != null) {
             callback(exportJson);
         } else {
