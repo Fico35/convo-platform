@@ -11,44 +11,40 @@ class ChatbotState {
     addAction(intent, action) {
         this.actions.set(intent, action);
     }
+
     addAnswer(intent, answer) {
         if (answer instanceof Array) {
             // add each answer from array
-            if (!this.answers.has(intent)) {
-                let emptyArray = [];
-                this.answers.set(intent, emptyArray);
-            }
-            let answerArray = this.answers.get(intent); // only one get() call
-            for (let answ of answer) {
-                answerArray.push(answ);
+            if (this.answers.has(intent)) {
+                this.answers.set(intent, [...this.answers.get(intent), ...answer]);
+            } else {
+                this.answers.set(intent, [...answer]);
             }
         } else {
             // add answer sent as parameter
-            if (!this.answers.has(intent)) {
-                let emptyArray = [];
-                this.answers.set(intent, emptyArray);
+            if (this.answers.has(intent)) {
+                this.answers.set(intent, [...this.answers.get(intent), answer]);
+            } else {
+                this.answers.set(intent, [answer]);
             }
-            this.answers.get(intent).push(answer);
         }
     }
+    
     addSuggestion(intent, suggestion) {
         if (suggestion instanceof Array) {
             // add each suggestion from array
-            if (!this.suggestions.has(intent)) {
-                let emptyArray = [];
-                this.suggestions.set(intent, emptyArray);
-            }
-            let suggestionArray = this.answers.get(intent); // only one get() call
-            for (let sugg of suggestion) {
-                suggestionArray.push(sugg);
+            if (this.suggestions.has(intent)) {
+                this.suggestions.set(intent, [...this.suggestions.get(intent), ...suggestion]);
+            } else {
+                this.suggestions.set(intent, [...suggestion]);
             }
         } else {
             // add suggestion sent as parameter
-            if (!this.suggestions.has(intent)) {
-                let emptyArray = [];
-                this.suggestions.set(intent, emptyArray);
+            if (this.suggestions.has(intent)) {
+                this.suggestions.set(intent, [...this.suggestions.get(intent), suggestion]);
+            } else {
+                this.suggestions.set(intent, [suggestion]);
             }
-            this.suggestions.get(intent).push(suggestion);
         }
     }
 
@@ -65,19 +61,13 @@ class ChatbotState {
         // get all answers for intent
         response.answers = [];
         if (this.answers.has(intent)) {
-            let answerArray = this.answers.get(intent); // only one get() call
-            for (let i = 0; i < answerArray.length; i++) {
-                response.answers.push(answerArray[i]);
-            }
+            response.answers = [...this.answers.get(intent)];
         }
 
         // get all suggestions for intent
         response.suggestions = [];
         if (this.suggestions.has(intent)) {
-            let suggestionArray = this.suggestions.get(intent); // only one get() call
-            for (let i = 0; i < suggestionArray.length; i++) {
-                response.suggestions.push(suggestionArray[i]);
-            }
+            response.suggestions = [...this.suggestions.get(intent)];
         }
 
         return response;
