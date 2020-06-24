@@ -1,10 +1,11 @@
 :root {
     --link-blue: #0088aa;
-}
-
-* {
+    --dark-gray: #666666;
+    --light-gray: #dddddd;
+    --light-gray-darker: #bbbbbb;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
 }
 
 body {
@@ -13,7 +14,7 @@ body {
 }
 
 body > nav {
-    background-color: #444444;
+    background-color: var(--dark-gray);
     color: #ffffff;
     padding: 1em;
     display: flex;
@@ -39,15 +40,18 @@ table th, table td {
     padding: 0.5em;
 }
 
-table tr {
-    border: 1px #bbbbbb solid;
-    background-color: #dddddd;
+table tr:nth-child(odd) {
+    background-color: #eeeeee;
 }
 
-table thead tr {
+table > thead > tr > th {
     background-color: var(--link-blue);
     color: #ffffff;
     text-transform: uppercase;
+}
+
+table > tbody {
+    border: 1px var(--light-gray-darker) solid;
 }
 
 .container {
@@ -74,7 +78,7 @@ table thead tr {
 
 .container > .view {
     padding: 1em;
-    border-top: 1px solid #dddddd;
+    border-top: 1px solid var(--light-gray);
 }
 
 .view > h1 {
@@ -82,7 +86,7 @@ table thead tr {
 }
 
 .view .code {
-    background-color: #cccccc;
+    background-color: var(--light-gray);
     padding: 1em;
     border-left: 5px #dd6600 solid;
     font-family: "Lucida Console", Monaco, monospace;
@@ -90,6 +94,11 @@ table thead tr {
 
 .magenta-letters {
     color: #660066;
+}
+
+.params {
+    color: var(--dark-gray);
+    font-family: "Lucida Console", Monaco, monospace;
 }
 
 .break-all {
@@ -107,18 +116,45 @@ table thead tr {
     margin: 0 1em;
 }
 
-.view > .two-cols >.col > ul{
+.view > .two-cols > .col > ul{
     list-style-type: none;
     padding: 0;
+    margin-bottom: 0;
 }
 
 .view > .two-cols > .col > ul > li {
-    padding: 0.3em 1em;
-    border-left: 3px #dddddd solid;
+    padding: 0.2em 1em;
+    border-left: 3px var(--light-gray) solid;
 }
 
 .view > .two-cols > .col > ul > li:hover {
     border-left: 3px var(--link-blue) solid;
+}
+
+.view li > a {
+    font-weight: normal;
+    color: #000000;
+}
+
+.view li > a:active, .view li > a:hover {
+    font-weight: normal;
+    color: var(--link-blue);
+}
+
+.view > .prop-method-list > h2 {
+    margin: 1.5em 0 0.5em 0;
+}
+
+.view > .prop-method-list > h3 {
+    margin: 1em 0 0.5em 0;
+    font-weight: normal;
+}
+
+.view > .prop-method-list > p {
+    margin: 0.5em 0 1em 0;
+    padding-left: 1em;
+    border-left: 3px var(--light-gray) solid;
+    line-height: 1.6;
 }
 
 @media(min-width: 900px) {
@@ -139,7 +175,8 @@ table thead tr {
     .container > .view {
         padding: 2em;
         border-top: none;
-        border-left: 1px solid #dddddd;
+        border-left: 1px solid var(--light-gray);
+        max-width: 900px;
     }
 
     .view .two-cols {

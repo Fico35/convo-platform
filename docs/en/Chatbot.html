@@ -13,12 +13,13 @@
             <nav class="sidebar">
                 <h2>Classes:</h2>
                 <ul>
-                    <li><a href="Chatbot.html">Chatbot</a></li>
-                    <li><a href="ChatbotState.html">ChatbotState</a></li>
+                    <li><a href="./Chatbot.html">Chatbot</a></li>
+                    <li><a href="./ChatbotState.html">ChatbotState</a></li>
                 </ul>
             </nav>
             <div class="view">
                 <h1>Chatbot</h1>
+                <p>Represents a chatbot instance that can be used to handle messages.</p>
                 <h2>Constructor</h2>
                 <p class="code"><span class="magenta-letters">new</span> Chatbot(intentExtractFunc);</p>
                 <table>
@@ -41,46 +42,96 @@
                     <div class="col">
                         <h3>Properties</h3>
                         <ul>
-                            <li>extractIntent</li>
-                            <li>allStates</li>
-                            <li>currentState</li>
+                            <li><a href="#prop_extractIntent">extractIntent</a></li>
+                            <li><a href="#prop_allStates">allStates</a></li>
+                            <li><a href="#prop_currentState">currentState</a></li>
                         </ul>
                     </div>
                     <div class="col">
                         <h3>Methods</h3>
                         <ul>
-                            <li>addState</li>
-                            <li>getState</li>
-                            <li>setCurrentState</li>
-                            <li>importStates</li>
-                            <li>importStatesWithActions</li>
-                            <li>exportStates</li>
-                            <li>exportStatesWithActions</li>
-                            <li>handle</li>
+                            <li><a href="#method_addState">addState</a></li>
+                            <li><a href="#method_getState">getState</a></li>
+                            <li><a href="#method_setCurrentState">setCurrentState</a></li>
+                            <li><a href="#method_importStates">importStates</a></li>
+                            <li><a href="#method_importStatesWithActions">importStatesWithActions</a></li>
+                            <li><a href="#method_exportStates">exportStates</a></li>
+                            <li><a href="#method_exportStatesWithActions">exportStatesWithActions</a></li>
+                            <li><a href="#method_handle">handle</a></li>
                         </ul>
                     </div>
                 </div>
-                <div>
+                <div class="prop-method-list">
                     <h2>Properties</h2>
-                    <h3>Property 1</h3>
-                    <p>description, type: <a>type</a></p>
-                    <h3>Property 2</h3>
-                    <p>description, type: <a>type</a></p>
-                    <h3>Property 3</h3>
-                    <p>description, type: <a>type</a></p>
-                    <h3>Property 4</h3>
-                    <p>description, type: <a>type</a></p>
+                    <h3 id="prop_extractIntent">extractIntent</h3>
+                    <p>
+                        Function that was given to Chatbot through constructor. This Chatbot instance will use this function when determining intent from a given sentence.
+                        <br />
+                        Type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">function</a>
+                    </p>
+                    <h3 id="prop_allStates">allStates</h3>
+                    <p>
+                        description
+                        <br />
+                        Type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, <a href="./ChatbotState.html">ChatbotState</a>&gt;
+                    </p>
+                    <h3 id="prop_currentState">currentState</h3>
+                    <p>
+                        description
+                        <br />
+                        Type: <a href="./ChatbotState.html">ChatbotState</a>
+                    </p>
                 </div>
-                <div>
+                <div class="prop-method-list">
                     <h2>Methods</h2>
-                    <h3>Method 1</h3>
-                    <p>description, returns: <a>type</a></p>
-                    <h3>Method 2</h3>
-                    <p>description, returns: <a>type</a></p>
-                    <h3>Method 3</h3>
-                    <p>description, returns: <a>type</a></p>
-                    <h3>Method 4</h3>
-                    <p>description, returns: <a>type</a></p>
+                    <h3 id="method_addState">addState( <span class="params">state</span> )</h3>
+                    <p>
+                        description
+                        <br />
+                        Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>
+                    </p>
+                    <h3 id="method_getState">getState( <span class="params">stateName</span> )</h3>
+                    <p>
+                        description
+                        <br />
+                        Returns: <a href="./ChatbotState.html">ChatbotState</a>
+                    </p>
+                    <h3 id="method_setCurrentState">setCurrentState( <span class="params">stateName</span> )</h3>
+                    <p>
+                        description
+                        <br />
+                        Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>
+                    </p>
+                    <h3 id="method_importStates">importStates( <span class="params">stateJson, [callback]</span> )</h3>
+                    <p>
+                        description
+                        <br />
+                        Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>&gt;
+                    </p>
+                    <h3 id="method_importStatesWithActions">importStatesWithActions( <span class="params">stateJson, [callback]</span> )</h3>
+                    <p>
+                        description
+                        <br />
+                        Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>&gt;
+                    </p>
+                    <h3 id="method_exportStates">exportStates( <span class="params">[callback]</span> )</h3>
+                    <p>
+                        description
+                        <br />
+                        Returns: ?<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a>&gt;
+                    </p>
+                    <h3 id="method_exportStatesWithActions">exportStatesWithActions( <span class="params">[callback]</span> )</h3>
+                    <p>
+                        description
+                        <br />
+                        Returns: ?<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a>&gt;
+                    </p>
+                    <h3 id="method_handle">handle( <span class="params">sentence, [callback]</span> )</h3>
+                    <p>
+                        description
+                        <br />
+                        Returns: ?<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;{intent, answers, suggestions}&gt;
+                    </p>
                 </div>
             </div>
         </div>
