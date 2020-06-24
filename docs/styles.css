@@ -4,8 +4,11 @@
     --light-gray: #dddddd;
     --light-gray-darker: #bbbbbb;
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-    box-sizing: border-box;
     font-size: 14px;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
@@ -32,12 +35,19 @@ a, a:active, a:hover {
     color: var(--link-blue);
 }
 
+.table-wrapper {
+    overflow-x: auto;
+    padding: 1px;
+}
+
 table {
+    margin-top: 1em;
     border-collapse: collapse;
 }
 
 table th, table td {
-    padding: 0.5em;
+    padding: 0.5em 1em;
+    text-align: center;
 }
 
 table tr:nth-child(odd) {
@@ -79,6 +89,7 @@ table > tbody {
 .container > .view {
     padding: 1em;
     border-top: 1px solid var(--light-gray);
+    max-width: 100%;
 }
 
 .view > h1 {
@@ -94,6 +105,11 @@ table > tbody {
 
 .magenta-letters {
     color: #660066;
+}
+
+.gray-bold {
+    color: var(--dark-gray);
+    font-weight: bold;
 }
 
 .params {
@@ -116,7 +132,7 @@ table > tbody {
     margin: 0 1em;
 }
 
-.view > .two-cols > .col > ul{
+.view > .two-cols > .col > ul {
     list-style-type: none;
     padding: 0;
     margin-bottom: 0;
@@ -142,22 +158,22 @@ table > tbody {
 }
 
 .view > .prop-method-list > h2 {
-    margin: 1.5em 0 0.5em 0;
+    margin: 2em 0 0.5em 0;
 }
 
 .view > .prop-method-list > h3 {
-    margin: 1em 0 0.5em 0;
+    margin: 1.5em 0 0.5em 0;
     font-weight: normal;
 }
 
-.view > .prop-method-list > p {
+.view > .prop-method-list > .prop-method-description {
     margin: 0.5em 0 1em 0;
     padding-left: 1em;
     border-left: 3px var(--light-gray) solid;
     line-height: 1.6;
 }
 
-@media(min-width: 900px) {
+@media(min-width: 800px) {
     .container {
         flex-direction: row;
         margin: 1em 0;
@@ -176,7 +192,7 @@ table > tbody {
         padding: 2em;
         border-top: none;
         border-left: 1px solid var(--light-gray);
-        max-width: 900px;
+        max-width: 800px;
     }
 
     .view .two-cols {
