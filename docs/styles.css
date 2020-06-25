@@ -19,14 +19,21 @@ body {
 body > nav {
     background-color: var(--dark-gray);
     color: #ffffff;
-    padding: 1em;
+    padding: 0;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 
-body > nav > h2 {
+body > nav > h2, body > nav > a {
+    color: #ffffff;
     margin: 0;
+    padding: 0.5em 2em;
+}
+
+body > nav > a:hover {
+    color: #ffffff;
+    background-color: var(--light-gray-darker);
 }
 
 h1 {
