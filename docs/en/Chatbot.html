@@ -287,7 +287,7 @@
                     </div>
                     <h3 id="method_handle">.handle( <span class="params">sentence, [callback]</span> )</h3>
                     <div class="prop-method-description">
-                        Handles the user message. First, the internal <span class="param">extractIntent</span> method is called to get the intent from the <span class="param">sentence</span> parameter. The the resulting intent is used to call the current states <span class="param">handle</span> method. If a callback function is provided, it is called with the resulting object. Otherwise, the function returns a Promise which resolves with the resulting object.
+                        Handles the user message. First, the internal <span class="param">extractIntent</span> method is called to get the intent from the <span class="param">sentence</span> parameter. Then the resulting intent is used to call the current states <span class="param">handle</span> method. If a callback function is provided, it is called with the resulting object. Otherwise, the function returns a Promise which resolves with the resulting object.
                         <br />
                         <div class="table-wrapper">
                             <table>
