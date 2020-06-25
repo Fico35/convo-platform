@@ -1,0 +1,325 @@
+<html lang="hr-HR">
+    <head>
+        <title>Chatbot</title>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Dokumentacija za klasu 'Chatbot'" />
+        <meta name="author" content="Filip Bacinger" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="../styles.css" />
+    </head>
+    <body>
+        <nav>
+            <h2>CONVO-PLATFORM dokumentacija</h2>
+            <a href="https://gitlab.com/fb50596/convo-platform"><h3>GitLab repozitorij</h3></a>
+            <a href="../en/Chatbot.html"><h3>Engleski</h3></a>
+        </nav>
+        <div class="container">
+            <nav class="sidebar">
+                <h2>Klase:</h2>
+                <ul>
+                    <li><a href="./Chatbot.html">Chatbot</a></li>
+                    <li><a href="./ChatbotState.html">ChatbotState</a></li>
+                </ul>
+            </nav>
+            <div class="view">
+                <h1>Chatbot</h1>
+                <p>Predstavlja instancu konverzacijskog agenta koji se može koristiti za obradu poruka.</p>
+                <h2>Konstruktor</h2>
+                <p class="code break-all"><span class="magenta-letters">new</span> Chatbot(intentExtractionFunction);</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Parametar</th>
+                                <th>Tip</th>
+                                <th>Opis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>intentExtractionFunction</td>
+                                <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
+                                <td>Funkcija koju ovaj konverzacijski agent koristi kako bi odredio namjeru iz rečenice</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="two-cols">
+                    <div class="col">
+                        <h3>Svojstva</h3>
+                        <ul>
+                            <li><a href="#prop_extractIntent">extractIntent</a></li>
+                            <li><a href="#prop_allStates">allStates</a></li>
+                            <li><a href="#prop_currentState">currentState</a></li>
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <h3>Metode</h3>
+                        <ul>
+                            <li><a href="#method_addState">addState</a></li>
+                            <li><a href="#method_getState">getState</a></li>
+                            <li><a href="#method_setCurrentState">setCurrentState</a></li>
+                            <li><a href="#method_importStates">importStates</a></li>
+                            <li><a href="#method_importStatesWithActions">importStatesWithActions</a></li>
+                            <li><a href="#method_exportStates">exportStates</a></li>
+                            <li><a href="#method_exportStatesWithActions">exportStatesWithActions</a></li>
+                            <li><a href="#method_handle">handle</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="prop-method-list">
+                    <h2>Svojstva</h2>
+                    <h3 id="prop_extractIntent">.extractIntent</h3>
+                    <div class="prop-method-description">
+                        Funkcija koja je konverzacijskom agentu predana kroz konstruktor. Ova instanca konverzacijskog agenta koristi ovu funkciju kod određivanja namjere iz rečenice.
+                        <br />
+                        <span class="gray-bold">Tip: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>
+                    </div>
+                    <h3 id="prop_allStates">.allStates</h3>
+                    <div class="prop-method-description">
+                        Mapa koja sadrži sva stanja ove instance konverzacijskog agenta. Koristi se kod mijenjanja trenutnog stanja.
+                        <br />
+                        <span class="gray-bold">Tip: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, <a href="./ChatbotState.html">ChatbotState</a>&gt;</span>
+                    </div>
+                    <h3 id="prop_currentState">.currentState</h3>
+                    <div class="prop-method-description">
+                        Trenutno aktivno stanje. Koristi se kod obrade namjere poruke (dobivanje odgovora i prijedloga).
+                        <br />
+                        <span class="gray-bold">Tip: <a href="./ChatbotState.html">ChatbotState</a></span>
+                    </div>
+                </div>
+                <div class="prop-method-list">
+                    <h2>Metode</h2>
+                    <h3 id="method_addState">.addState( <span class="params">state</span> )</h3>
+                    <div class="prop-method-description">
+                        Koristi se za dodavanje objekta tipa ChatbotState u mapu svih stanja. Vraća true ako je stanje uspješno dodano, inače baca grešku.
+                        <br />
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Parametar</th>
+                                        <th>Tip</th>
+                                        <th>Opis</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>state</td>
+                                        <td><a href="./ChatbotState.html">ChatbotState</a></td>
+                                        <td>Stanje koje se dodaje u konverzacijski agent</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
+                    </div>
+                    <h3 id="method_getState">.getState( <span class="params">stateName</span> )</h3>
+                    <div class="prop-method-description">
+                        Koristi se za dohvaćanje stanja iz mape svih stanja koristeći string koji predstavlja ime stanja.
+                        <br />
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Parametar</th>
+                                        <th>Tip</th>
+                                        <th>Opis</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>stateName</td>
+                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></td>
+                                        <td>Ime stanja za dohvatiti</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        <span class="gray-bold">Povratna vrijednost: <a href="./ChatbotState.html">ChatbotState</a></span>
+                    </div>
+                    <h3 id="method_setCurrentState">.setCurrentState( <span class="params">stateName</span> )</h3>
+                    <div class="prop-method-description">
+                        Koristi se za postavljanje trenutnog stanja konverzacijskog agenta. Koristite ovo umjesto direktnog postavljanja svojstva <span class="params">currentState</span> jer ova metoda provjerava ako stanje postoji. Vraća true ako je stanje uspješno promijenjeno, inače baca grešku.
+                        <br />
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Parametar</th>
+                                        <th>Tip</th>
+                                        <th>Opis</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>stateName</td>
+                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></td>
+                                        <td>Ime stanja koje se postavlja na trenutno</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
+                    </div>
+                    <h3 id="method_importStates">.importStates( <span class="params">stateJson, [callback]</span> )</h3>
+                    <div class="prop-method-description">
+                        Uvozi stanja agenta s odgovorima i prijedlozima, bez akcija. JSON koji se koristi bi trebao biti rezultat iz prije pozvane metode <span class="params">exportStates</span> ili <span class="params">exportStatesWithActions</span>. Ako je zadana callback funkcija, poziva se bez parametara. Ako nije zadana, funkcija vraća Promise koji se razrješava prazno (undefined).
+                        <br />
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Parametar</th>
+                                        <th>Tip</th>
+                                        <th>Izborno</th>
+                                        <th>Opis</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>stateJson</td>
+                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></td>
+                                        <td></td>
+                                        <td>JSON koji sadrži stanja s odgovorima i prijedlozima</td>
+                                    </tr>
+                                    <tr>
+                                        <td>callback</td>
+                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
+                                        <td>&#x2714;</td>
+                                        <td>Callback funkcija</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>&gt;</span>
+                    </div>
+                    <h3 id="method_importStatesWithActions">.importStatesWithActions( <span class="params">stateJson, [callback]</span> )</h3>
+                    <div class="prop-method-description">
+                        Uvozi stanja sa svime: akcijama, odgovorima i prijedlozima. Pošto su akcije tekst koji će se pretvoriti u izvršni kod, ovu metodu treba oprezno koristiti. Samo koristite ovo ako je JSON Vaš vlastiti ili dolazi iz sigurnog izvora. JSON bi trebao biti rezultat prije pozvane <span class="params">exportStates</span> ili <span class="params">exportStatesWithActions</span> metode. Ako je zadana callback funkcija, poziva se bez parametara. Ako nije zadana, funkcija vraća Promise koji se razrješava prazno (undefined).
+                        <br />
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Parametar</th>
+                                        <th>Tip</th>
+                                        <th>Izborno</th>
+                                        <th>Opis</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>stateJson</td>
+                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></td>
+                                        <td></td>
+                                        <td>JSON koji sadrži stanja s akcijama, odgovorima i prijedlozima</td>
+                                    </tr>
+                                    <tr>
+                                        <td>callback</td>
+                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
+                                        <td>&#x2714;</td>
+                                        <td>Callback funkcija</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>&gt;</span>
+                    </div>
+                    <h3 id="method_exportStates">.exportStates( <span class="params">[callback]</span> )</h3>
+                    <div class="prop-method-description">
+                        Izvozi sva stanja konverzacijskog agenta u JSON obliku. Izvezena stanja imaju samo odgovore i prijedloge bez akcija. Ako je zadana callback funkcija, poziva se s rezultantnim JSON objektom kao parametrom. Ako nije zadana, funkcija vraća Promise koji se razrješava s rezultantnim JSON objektom.
+                        <br />
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Parametar</th>
+                                        <th>Tip</th>
+                                        <th>Izborno</th>
+                                        <th>Opis</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>callback</td>
+                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
+                                        <td>&#x2714;</td>
+                                        <td>Callback funkcija</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a>&gt;</span>
+                    </div>
+                    <h3 id="method_exportStatesWithActions">.exportStatesWithActions( <span class="params">[callback]</span> )</h3>
+                    <div class="prop-method-description">
+                        Izvozi sva stanja konverzacijskog agenta u JSON obliku. Izvezena stanja sadrže sve: akcije, odgovore i prijedloge. Pošto su akcije izvršni kod dobiven iz teksta, pri uvozu treba biti oprezan. Ako je zadana callback funkcija, poziva se s rezultantnim JSON objektom kao parametrom. Ako nije zadana, funkcija vraća Promise koji se razrješava s rezultantnim JSON objektom.
+                        <br />
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Parametar</th>
+                                        <th>Tip</th>
+                                        <th>Izborno</th>
+                                        <th>Opis</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>callback</td>
+                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
+                                        <td>&#x2714;</td>
+                                        <td>Callback funkcija</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a>&gt;</span>
+                    </div>
+                    <h3 id="method_handle">.handle( <span class="params">sentence, [callback]</span> )</h3>
+                    <div class="prop-method-description">
+                        Obrađuje korisnikovu poruku. Najprije se poziva <span class="param">extractIntent</span> metoda kako bi se dobila namjera iz parametra <span class="param">sentence</span>. Zatim se namjera koristi kao parametar pri pozivu <span class="param">handle</span> metode trenutnog stanja. Ako je zadana callback funkcija, poziva se s rezultantnim objektom. AKo nije zadana, funkcija vraća Promise koji se razrješava s rezultantnim objektom.
+                        <br />
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Parametar</th>
+                                        <th>Tip</th>
+                                        <th>Izborno</th>
+                                        <th>Opis</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>sentence</td>
+                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></td>
+                                        <td></td>
+                                        <td>Poruka od korisnika koju treba obraditi</td>
+                                    </tr>
+                                    <tr>
+                                        <td>callback</td>
+                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
+                                        <td>&#x2714;</td>
+                                        <td>Callback funkcija</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;{intent, answers, suggestions}&gt;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
