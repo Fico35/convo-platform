@@ -65,6 +65,11 @@ table tr:nth-child(odd) {
     background-color: #eeeeee;
 }
 
+table > thead > tr {
+    background-color: var(--link-blue);
+    border: 1px var(--link-blue) solid;
+}
+
 table > thead > tr > th {
     background-color: var(--link-blue);
     color: #ffffff;
