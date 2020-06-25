@@ -88,7 +88,7 @@
                     <h2>Methods</h2>
                     <h3 id="method_addState">.addState( <span class="params">state</span> )</h3>
                     <div class="prop-method-description">
-                        Used for adding a ChatbotState object to the list of all states.
+                        Used for adding a ChatbotState object to the list of all states. Returns true if the state was successfully added, otherwise throws an error.
                         <br />
                         <div class="table-wrapper">
                             <table>
@@ -109,7 +109,7 @@
                             </table>
                         </div>
                         <br />
-                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span>
+                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
                     </div>
                     <h3 id="method_getState">.getState( <span class="params">stateName</span> )</h3>
                     <div class="prop-method-description">
@@ -138,7 +138,7 @@
                     </div>
                     <h3 id="method_setCurrentState">.setCurrentState( <span class="params">stateName</span> )</h3>
                     <div class="prop-method-description">
-                        Used for setting the current state of the Chatbot. Use this instead of setting the <span class="params">currentState</span> property directly because this checks if the state exists.
+                        Used for setting the current state of the Chatbot. Use this instead of setting the <span class="params">currentState</span> property directly because this checks if the state exists. Returns true if the state was successfully set, otherwise throws an error.
                         <br />
                         <div class="table-wrapper">
                             <table>
@@ -159,7 +159,7 @@
                             </table>
                         </div>
                         <br />
-                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span>
+                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
                     </div>
                     <h3 id="method_importStates">.importStates( <span class="params">stateJson, [callback]</span> )</h3>
                     <div class="prop-method-description">
@@ -252,7 +252,7 @@
                             </table>
                         </div>
                         <br />
-                        <span class="gray-bold">Returns: ?<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a>&gt;</span>
+                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a>&gt;</span>
                     </div>
                     <h3 id="method_exportStatesWithActions">.exportStatesWithActions( <span class="params">[callback]</span> )</h3>
                     <div class="prop-method-description">
@@ -279,7 +279,7 @@
                             </table>
                         </div>
                         <br />
-                        <span class="gray-bold">Returns: ?<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a>&gt;</span>
+                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a>&gt;</span>
                     </div>
                     <h3 id="method_handle">.handle( <span class="params">sentence, [callback]</span> )</h3>
                     <div class="prop-method-description">
@@ -312,7 +312,7 @@
                             </table>
                         </div>
                         <br />
-                        <span class="gray-bold">Returns: ?<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;{intent, answers, suggestions}&gt;</span>
+                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;{intent, answers, suggestions}&gt;</span>
                     </div>
                 </div>
             </div>

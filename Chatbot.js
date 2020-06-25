@@ -2,10 +2,10 @@ class Chatbot {
     // ----- CONSTRUCTOR ----- //
     constructor(intentExtractionFunction) {
         if (intentExtractionFunction == null) { // == matches null and undefined
-            throw new Error("Please define an intent extracting function for your chatbot.");
+            throw new Error(`Please define an intent extracting function for your chatbot.`);
         }
-        if (typeof intentExtractionFunction !== "function" && !(intentExtractionFunction instanceof Function)) {
-            throw new Error("Parameter given to chatbot is not a function.");
+        if (typeof intentExtractionFunction !== 'function' && !(intentExtractionFunction instanceof Function)) {
+            throw new Error(`Parameter given to chatbot is not a function.`);
         }
         this.extractIntent = intentExtractionFunction;
         this.allStates = new Map();
@@ -14,11 +14,15 @@ class Chatbot {
     // ----- ALL STATES ----- //
     addState(state) {
         const ChatbotState = require('./ChatbotState');
+        if (state == null) {
+            throw new Error(`Please pass a ChatbotState as a parameter to addState(state).`);
+        }
         if (state instanceof ChatbotState) {
             state.chatbot = this;   // add chatbot reference to state
             this.allStates.set(state.name, state);
+            return true;
         } else {
-            throw new Error("Given parameter is not of type ChatbotState.");
+            throw new Error(`Given parameter is not of type ChatbotState.`);
         }
     }
     getState(stateName) {
@@ -29,6 +33,7 @@ class Chatbot {
     setCurrentState(stateName) {
         if (this.allStates.has(stateName)) {
             this.currentState = this.allStates.get(stateName);
+            return true;
         } else {
             throw new Error(`State with given name (${stateName}) does not exist.`);
         }
@@ -56,6 +61,7 @@ class Chatbot {
     }
 
     async importStatesWithActions(stateJson, callback = null) {
+        console.warn(`This feature converts strings from JSON format into executable code. If the source of this is not trusted, it might be harmful or cause many errors. Please only use this if you know what you are doing!`);
         const ChatbotState = require('./ChatbotState');
         let arr = JSON.parse(stateJson);
         for (let i = 0; i < arr.length; i++) {
@@ -74,7 +80,6 @@ class Chatbot {
             }
             this.addState(state);
         }
-        console.warn("This feature converts strings from JSON format into executable code. If the source of this is not trusted, it might be harmful or cause many errors. Please only use this if you know what you are doing!");
         if (callback != null) {
             callback();
         }
@@ -119,12 +124,12 @@ class Chatbot {
         let exportJson = `[` + stateArray.join(",") + `]`;
         if (callback != null) {
             callback(exportJson);
-        } else {
-            return exportJson;
         }
+        return exportJson;
     }
-
+    
     async exportStatesWithActions(callback = null) {
+        console.warn("This feature converts executable code into strings. If this code is reused without proper checks, it may cause many errors. Please only use this if you know what you are doing!");
         let stateArray = [];
         for (let [name, state] of this.allStates) {
             // start STATE
@@ -178,12 +183,10 @@ class Chatbot {
             stateArray.push(stateString);
         }
         let exportJson = `[` + stateArray.join(",") + `]`;
-        console.warn("This feature converts executable code into strings. If this code is reused without proper checks, it may cause many errors. Please only use this if you know what you are doing!");
         if (callback != null) {
             callback(exportJson);
-        } else {
-            return exportJson;
         }
+        return exportJson;
     }
 
     // ----- HANDLER ----- //
@@ -197,9 +200,8 @@ class Chatbot {
         // return Promise if callback is null
         if (callback != null) {
             callback(response);
-        } else {
-            return response;
         }
+        return response;
     }
 }
 

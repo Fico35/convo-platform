@@ -9,43 +9,31 @@ class ChatbotState {
 
     // ----- ADD FUNCTIONS ----- //
     addAction(intent, action) {
+        let isNew = !this.actions.has(intent);
         this.actions.set(intent, action);
+        return isNew;
     }
 
     addAnswer(intent, answer) {
-        if (answer instanceof Array) {
-            // add each answer from array
-            if (this.answers.has(intent)) {
-                this.answers.set(intent, [...this.answers.get(intent), ...answer]);
-            } else {
-                this.answers.set(intent, [...answer]);
-            }
-        } else {
-            // add answer sent as parameter
-            if (this.answers.has(intent)) {
-                this.answers.set(intent, [...this.answers.get(intent), answer]);
-            } else {
-                this.answers.set(intent, [answer]);
-            }
+        let isNew = false;
+        if (!this.answers.has(intent)) {
+            // no answers exist for given intent
+            this.answers.set(intent, []);
+            isNew = true;
         }
+        this.answers.set(intent, this.answers.get(intent).concat(answer));
+        return isNew;
     }
     
     addSuggestion(intent, suggestion) {
-        if (suggestion instanceof Array) {
-            // add each suggestion from array
-            if (this.suggestions.has(intent)) {
-                this.suggestions.set(intent, [...this.suggestions.get(intent), ...suggestion]);
-            } else {
-                this.suggestions.set(intent, [...suggestion]);
-            }
-        } else {
-            // add suggestion sent as parameter
-            if (this.suggestions.has(intent)) {
-                this.suggestions.set(intent, [...this.suggestions.get(intent), suggestion]);
-            } else {
-                this.suggestions.set(intent, [suggestion]);
-            }
+        let isNew = false;
+        if (!this.suggestions.has(intent)) {
+            // no answers exist for given intent
+            this.suggestions.set(intent, []);
+            isNew = true;
         }
+        this.suggestions.set(intent, this.suggestions.get(intent).concat(suggestion));
+        return isNew;
     }
 
     // ----- STATE HANDLER ----- //

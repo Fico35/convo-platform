@@ -92,7 +92,7 @@
                     <h2>Methods</h2>
                     <h3 id="method_addAction">.addAction( <span class="params">intent, action</span> )</h3>
                     <div class="prop-method-description">
-                        Used for adding an action that will be executed when the given intent is recognized. Only one action is allowed per intent, so calling this function again with the same <span class="params">intent</span> will result in overwriting the old action with the new one.
+                        Used for adding an action that will be executed when the given intent is recognized. Only one action is allowed per intent, so calling this function again with the same <span class="params">intent</span> will result in overwriting the old action with the new one. Returns true if there was no action assigned to the intent previously, otherwise returns false.
                         <br />
                         <div class="table-wrapper">
                             <table>
@@ -118,11 +118,11 @@
                             </table>
                         </div>
                         <br />
-                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span>
+                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
                     </div>
                     <h3 id="method_addAnswer">.addAnswer( <span class="params">intent, answer</span> )</h3>
                     <div class="prop-method-description">
-                        Used for adding answers to return for the given intent. If the provided answer is of the type Array, all elements of the Array are added, instead of adding the Array itself as an element.
+                        Used for adding answers to return for the given intent. If the provided answer is of the type Array, all elements of the Array are added, instead of adding the Array itself as an element. Returns true if there were no answers for given intent previously, otherwise returns false.
                         <br />
                         <div class="table-wrapper">
                             <table>
@@ -148,11 +148,11 @@
                             </table>
                         </div>
                         <br />
-                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span>
+                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
                     </div>
                     <h3 id="method_addSuggestion">.addSuggestion( <span class="params">intent, suggestion</span> )</h3>
                     <div class="prop-method-description">
-                        Used for adding suggestions to return for the given intent. If the provided suggestion is of the type Array, all elements of the Array are added, instead of adding the Array itself as an element.
+                        Used for adding suggestions to return for the given intent. If the provided suggestion is of the type Array, all elements of the Array are added, instead of adding the Array itself as an element. Returns true if there were no suggestions for given intent previously, otherwise returns false.
                         <br />
                         <div class="table-wrapper">
                             <table>
@@ -178,7 +178,7 @@
                             </table>
                         </div>
                         <br />
-                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span>
+                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
                     </div>
                     <h3 id="method_handle">.handle( <span class="params">intent</span> )</h3>
                     <div class="prop-method-description">
