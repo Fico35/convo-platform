@@ -161,7 +161,7 @@ class Chatbot {
             throw new Error("No state has been selected.");
         }
         let nlpResult = await this.extractIntent(utterance);
-        let answers = await this.currentState.handle(nlpResult.intent);
+        let answers = await this.currentState.process(nlpResult.intent);
         return {
             utterance: utterance,
             intent: nlpResult.intent,

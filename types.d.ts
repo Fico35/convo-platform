@@ -6,7 +6,7 @@ export declare class ChatbotState {
     chatbot: Chatbot;
     addAction(intent: string, action: (chatbotState: ChatbotState) => void): boolean;
     addAnswer(intent: string, answer: any): boolean;
-    async process(intent: string): Promise<any[]>;
+    process(intent: string): Promise<any[]>;
 }
 
 export type nlpResult = {
@@ -24,15 +24,15 @@ export type chatbotProcessResult = {
 
 export declare class Chatbot {
     constructor(intentExtractionFunction: (utterance: string) => Promise<nlpResult>);
-    async extractIntent(utterance: string): Promise<nlpResult>;
+    extractIntent(utterance: string): Promise<nlpResult>;
     allStates: Map<string, ChatbotState>;
     currentState: ChatbotState;
     addState(state: ChatbotState): boolean;
     getState(stateName: string): ChatbotState;
     setCurrentState(stateName: string): boolean;
-    async importStates(exportedStatesString: string): Promise<void>;
-    async importStatesWithActions(exportedStatesString: string): Promise<void>;
-    async exportStates(): Promise<string>;
-    async exportStatesWithActions(): Promise<string>;
-    async process(utterance: string): Promise<chatbotProcessResult>;
+    importStates(exportedStatesString: string): Promise<void>;
+    importStatesWithActions(exportedStatesString: string): Promise<void>;
+    exportStates(): Promise<string>;
+    exportStatesWithActions(): Promise<string>;
+    process(utterance: string): Promise<chatbotProcessResult>;
 }
