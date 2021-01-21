@@ -20,7 +20,7 @@ class ChatbotState {
             this.answers.set(intent, []);
             isNew = true;
         }
-        this.answers.set(intent, this.answers.get(intent).push(answer));
+        this.answers.get(intent).push(answer);
         return isNew;
     }
 
