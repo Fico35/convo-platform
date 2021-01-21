@@ -63,7 +63,7 @@
                             <li><a href="#method_importStatesWithActions">importStatesWithActions</a></li>
                             <li><a href="#method_exportStates">exportStates</a></li>
                             <li><a href="#method_exportStatesWithActions">exportStatesWithActions</a></li>
-                            <li><a href="#method_handle">handle</a></li>
+                            <li><a href="#method_process">process</a></li>
                         </ul>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                     <h2>Svojstva</h2>
                     <h3 id="prop_extractIntent">.extractIntent</h3>
                     <div class="prop-method-description">
-                        Funkcija koja je konverzacijskom agentu predana kroz konstruktor. Ova instanca konverzacijskog agenta koristi ovu funkciju kod određivanja namjere iz rečenice.
+                        Funkcija koja je konverzacijskom agentu predana kroz konstruktor. Ova instanca konverzacijskog agenta koristi ovu funkciju kod određivanja namjere iz rečenice. Funkcija prima rečenicu (string) kao parametar, a vraća objekt sa sljedećim svojstvima: 'utterance', 'intent', 'score'.
                         <br />
                         <span class="gray-bold">Tip: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>
                     </div>
@@ -165,9 +165,9 @@
                         <br />
                         <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
                     </div>
-                    <h3 id="method_importStates">.importStates( <span class="params">stateJson, [callback]</span> )</h3>
+                    <h3 id="method_importStates">.importStates( <span class="params">stateJson</span> )</h3>
                     <div class="prop-method-description">
-                        Uvozi stanja agenta s odgovorima i prijedlozima, bez akcija. JSON koji se koristi bi trebao biti rezultat iz prije pozvane metode <span class="params">exportStates</span> ili <span class="params">exportStatesWithActions</span>. Ako je zadana callback funkcija, poziva se bez parametara. Ako nije zadana, funkcija vraća Promise koji se razrješava prazno (undefined).
+                        Uvozi stanja agenta s odgovorima i prijedlozima, bez akcija. JSON koji se koristi bi trebao biti rezultat iz prije pozvane metode <span class="params">exportStates</span> ili <span class="params">exportStatesWithActions</span>. Funkcija vraća Promise koji se razrješava prazno (undefined).
                         <br />
                         <div class="table-wrapper">
                             <table>
@@ -175,7 +175,6 @@
                                     <tr>
                                         <th>Parametar</th>
                                         <th>Tip</th>
-                                        <th>Izborno</th>
                                         <th>Opis</th>
                                     </tr>
                                 </thead>
@@ -183,14 +182,7 @@
                                     <tr>
                                         <td>stateJson</td>
                                         <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></td>
-                                        <td></td>
-                                        <td>JSON koji sadrži stanja s odgovorima i prijedlozima</td>
-                                    </tr>
-                                    <tr>
-                                        <td>callback</td>
-                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
-                                        <td>&#x2714;</td>
-                                        <td>Callback funkcija</td>
+                                        <td>JSON string koji sadrži stanja s odgovorima i prijedlozima</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -198,9 +190,9 @@
                         <br />
                         <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>&gt;</span>
                     </div>
-                    <h3 id="method_importStatesWithActions">.importStatesWithActions( <span class="params">stateJson, [callback]</span> )</h3>
+                    <h3 id="method_importStatesWithActions">.importStatesWithActions( <span class="params">stateJson</span> )</h3>
                     <div class="prop-method-description">
-                        Uvozi stanja sa svime: akcijama, odgovorima i prijedlozima. Pošto su akcije tekst koji će se pretvoriti u izvršni kod, ovu metodu treba oprezno koristiti. Samo koristite ovo ako je JSON Vaš vlastiti ili dolazi iz sigurnog izvora. JSON bi trebao biti rezultat prije pozvane <span class="params">exportStates</span> ili <span class="params">exportStatesWithActions</span> metode. Ako je zadana callback funkcija, poziva se bez parametara. Ako nije zadana, funkcija vraća Promise koji se razrješava prazno (undefined).
+                        Uvozi stanja sa svime: akcijama, odgovorima i prijedlozima. Pošto su akcije tekst koji će se pretvoriti u izvršni kod, ovu metodu treba oprezno koristiti. Samo koristite ovo ako je JSON Vaš vlastiti ili dolazi iz sigurnog izvora. JSON bi trebao biti rezultat prije pozvane <span class="params">exportStates</span> ili <span class="params">exportStatesWithActions</span> metode. Funkcija vraća Promise koji se razrješava prazno (undefined).
                         <br />
                         <div class="table-wrapper">
                             <table>
@@ -208,7 +200,6 @@
                                     <tr>
                                         <th>Parametar</th>
                                         <th>Tip</th>
-                                        <th>Izborno</th>
                                         <th>Opis</th>
                                     </tr>
                                 </thead>
@@ -216,14 +207,7 @@
                                     <tr>
                                         <td>stateJson</td>
                                         <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></td>
-                                        <td></td>
-                                        <td>JSON koji sadrži stanja s akcijama, odgovorima i prijedlozima</td>
-                                    </tr>
-                                    <tr>
-                                        <td>callback</td>
-                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
-                                        <td>&#x2714;</td>
-                                        <td>Callback funkcija</td>
+                                        <td>JSON string koji sadrži stanja s akcijama, odgovorima i prijedlozima</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -231,63 +215,21 @@
                         <br />
                         <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>&gt;</span>
                     </div>
-                    <h3 id="method_exportStates">.exportStates( <span class="params">[callback]</span> )</h3>
+                    <h3 id="method_exportStates">.exportStates( )</h3>
                     <div class="prop-method-description">
-                        Izvozi sva stanja konverzacijskog agenta u JSON obliku. Izvezena stanja imaju samo odgovore i prijedloge bez akcija. Ako je zadana callback funkcija, poziva se s rezultantnim JSON objektom kao parametrom. Ako nije zadana, funkcija vraća Promise koji se razrješava s rezultantnim JSON objektom.
-                        <br />
-                        <div class="table-wrapper">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Parametar</th>
-                                        <th>Tip</th>
-                                        <th>Izborno</th>
-                                        <th>Opis</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>callback</td>
-                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
-                                        <td>&#x2714;</td>
-                                        <td>Callback funkcija</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        Izvozi sva stanja konverzacijskog agenta u JSON obliku. Izvezena stanja imaju samo odgovore i prijedloge bez akcija. Funkcija vraća Promise koji se razrješava s rezultantnim JSON objektom.
                         <br />
                         <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a>&gt;</span>
                     </div>
-                    <h3 id="method_exportStatesWithActions">.exportStatesWithActions( <span class="params">[callback]</span> )</h3>
+                    <h3 id="method_exportStatesWithActions">.exportStatesWithActions( )</h3>
                     <div class="prop-method-description">
-                        Izvozi sva stanja konverzacijskog agenta u JSON obliku. Izvezena stanja sadrže sve: akcije, odgovore i prijedloge. Pošto su akcije izvršni kod dobiven iz teksta, pri uvozu treba biti oprezan. Ako je zadana callback funkcija, poziva se s rezultantnim JSON objektom kao parametrom. Ako nije zadana, funkcija vraća Promise koji se razrješava s rezultantnim JSON objektom.
-                        <br />
-                        <div class="table-wrapper">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Parametar</th>
-                                        <th>Tip</th>
-                                        <th>Izborno</th>
-                                        <th>Opis</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>callback</td>
-                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
-                                        <td>&#x2714;</td>
-                                        <td>Callback funkcija</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        Izvozi sva stanja konverzacijskog agenta u JSON obliku. Izvezena stanja sadrže sve: akcije, odgovore i prijedloge. Pošto su akcije izvršni kod dobiven iz teksta, pri uvozu treba biti oprezan. Funkcija vraća Promise koji se razrješava s rezultantnim JSON objektom.
                         <br />
                         <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a>&gt;</span>
                     </div>
-                    <h3 id="method_handle">.handle( <span class="params">sentence, [callback]</span> )</h3>
+                    <h3 id="method_process">.process( <span class="params">utterance</span> )</h3>
                     <div class="prop-method-description">
-                        Obrađuje korisnikovu poruku. Najprije se poziva <span class="param">extractIntent</span> metoda kako bi se dobila namjera iz parametra <span class="param">sentence</span>. Zatim se namjera koristi kao parametar pri pozivu <span class="param">handle</span> metode trenutnog stanja. Ako je zadana callback funkcija, poziva se s rezultantnim objektom. AKo nije zadana, funkcija vraća Promise koji se razrješava s rezultantnim objektom.
+                        Obrađuje korisnikovu poruku. Najprije se poziva <span class="params">extractIntent</span> metoda kako bi se dobila namjera iz parametra <span class="params">utterance</span>. Zatim se namjera koristi kao parametar pri pozivu <span class="params">process</span> metode trenutnog stanja. Funkcija vraća Promise koji se razrješava s rezultantnim objektom.
                         <br />
                         <div class="table-wrapper">
                             <table>
@@ -295,28 +237,20 @@
                                     <tr>
                                         <th>Parametar</th>
                                         <th>Tip</th>
-                                        <th>Izborno</th>
                                         <th>Opis</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>sentence</td>
+                                        <td>utterance</td>
                                         <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></td>
-                                        <td></td>
                                         <td>Poruka od korisnika koju treba obraditi</td>
                                     </tr>
-                                    <tr>
-                                        <td>callback</td>
-                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
-                                        <td>&#x2714;</td>
-                                        <td>Callback funkcija</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                         <br />
-                        <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;{intent, answers, suggestions}&gt;</span>
+                        <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;{utterance, intent, score, answers}&gt;</span>
                     </div>
                 </div>
             </div>

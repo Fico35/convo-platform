@@ -52,7 +52,6 @@
                             <li><a href="#prop_name">name</a></li>
                             <li><a href="#prop_actions">actions</a></li>
                             <li><a href="#prop_answers">answers</a></li>
-                            <li><a href="#prop_suggestions">suggestions</a></li>
                         </ul>
                     </div>
                     <div class="col">
@@ -60,8 +59,7 @@
                         <ul>
                             <li><a href="#method_addAction">addAction</a></li>
                             <li><a href="#method_addAnswer">addAnswer</a></li>
-                            <li><a href="#method_addSuggestion">addSuggestion</a></li>
-                            <li><a href="#method_handle">handle</a></li>
+                            <li><a href="#method_process">process</a></li>
                         </ul>
                     </div>
                 </div>
@@ -75,19 +73,13 @@
                     </div>
                     <h3 id="prop_actions">.actions</h3>
                     <div class="prop-method-description">
-                        A map containing actions assigned to intents. The key is the intent, the value is the action. When the <span class="params">handle</span> method is called with an intent from this map, the corresponding action is called with the first parameter being this ChatbotState.
+                        A map containing actions assigned to intents. The key is the intent, the value is the action. When the <span class="params">process</span> method is called with an intent from this map, the corresponding action is called with the first parameter being this ChatbotState.
                         <br />
                         <span class="gray-bold">Type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a>&gt;</span>
                     </div>
                     <h3 id="prop_answers">.answers</h3>
                     <div class="prop-method-description">
-                        A map containing answers assigned to intents. The key is the intent, the value is an array of answers (multiple answers can be added for the same intent). When the <span class="params">handle</span> method is called with an intent from this map, all corresponding answers (the entire array) are returned as part of the result. Note: if using the import/export functionality, answers should be strings (because they are imported and exported as such).
-                        <br />
-                        <span class="gray-bold">Type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;any&gt;&gt;</span>
-                    </div>
-                    <h3 id="prop_suggestions">.suggestions</h3>
-                    <div class="prop-method-description">
-                        A map containing suggestions assigned to intents. The key is the intent, the value is an array of suggestions (multiple suggestions can be added for the same intent). When the <span class="params">handle</span> method is called with an intent from this map, all corresponding suggestions (the entire array) are returned as part of the result. Note: if using the import/export functionality, suggestions should be strings (because they are imported and exported as such).
+                        A map containing answers assigned to intents. The key is the intent, the value is an array of answers (multiple answers can be added for the same intent). When the <span class="params">process</span> method is called with an intent from this map, all corresponding answers (the entire array) are returned as part of the result. Note: if using the import/export functionality, answers should be strings (because they are imported and exported as such).
                         <br />
                         <span class="gray-bold">Type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;any&gt;&gt;</span>
                     </div>
@@ -145,7 +137,7 @@
                                     </tr>
                                     <tr>
                                         <td>answer</td>
-                                        <td><span class="gray-bold">any</span> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;<span class="gray-bold">any</span>&gt;</td>
+                                        <td><span class="gray-bold">any</span></td>
                                         <td>The answer (or answers) to return for given intent</td>
                                     </tr>
                                 </tbody>
@@ -154,9 +146,9 @@
                         <br />
                         <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
                     </div>
-                    <h3 id="method_addSuggestion">.addSuggestion( <span class="params">intent, suggestion</span> )</h3>
+                    <h3 id="method_process">.process( <span class="params">intent</span> )</h3>
                     <div class="prop-method-description">
-                        Used for adding suggestions to return for the given intent. If the provided suggestion is of the type Array, all elements of the Array are added, instead of adding the Array itself as an element. Returns true if there were no suggestions for given intent previously, otherwise returns false.
+                        Processes the intent. Called by the Chatbot when this state is the current state. Executes actions for the intent (if any exist), and returns the intent along with the corresponding answers and suggestions (if any are defined for it).
                         <br />
                         <div class="table-wrapper">
                             <table>
@@ -171,43 +163,13 @@
                                     <tr>
                                         <td>intent</td>
                                         <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></td>
-                                        <td>Intent to wait for</td>
-                                    </tr>
-                                    <tr>
-                                        <td>suggestion</td>
-                                        <td><span class="gray-bold">any</span> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;<span class="gray-bold">any</span>&gt;</td>
-                                        <td>The suggestion (or suggestions) to return for given intent</td>
+                                        <td>Intent to process</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <br />
-                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
-                    </div>
-                    <h3 id="method_handle">.handle( <span class="params">intent</span> )</h3>
-                    <div class="prop-method-description">
-                        Handles the intent. Called by the Chatbot when this state is the current state. Executes actions for the intent (if any exist), and returns the intent along with the corresponding answers and suggestions (if any are defined for it).
-                        <br />
-                        <div class="table-wrapper">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Parameter</th>
-                                        <th>Type</th>
-                                        <th>Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>intent</td>
-                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></td>
-                                        <td>Intent to handle</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <br />
-                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;{intent, answers, suggestions}&gt;</span>
+                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;any[]&gt;</span>
                     </div>
                 </div>
             </div>

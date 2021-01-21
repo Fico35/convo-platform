@@ -7,6 +7,7 @@
     "type": "git",
     "url": "git+ssh://git@gitlab.com/fb50596/convo-platform.git"
   },
+  "types": "types.d.ts",
   "keywords": [
     "chatbot",
     "framework",

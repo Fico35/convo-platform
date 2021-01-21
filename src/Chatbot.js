@@ -1,3 +1,5 @@
+const ChatbotState = require('./ChatbotState');
+
 class Chatbot {
     // ----- CONSTRUCTOR ----- //
     constructor(intentExtractionFunction) {
@@ -13,7 +15,6 @@ class Chatbot {
 
     // ----- ALL STATES ----- //
     addState(state) {
-        const ChatbotState = require('./ChatbotState');
         if (state == null) {
             throw new Error(`Please pass a ChatbotState as a parameter to addState(state).`);
         }
@@ -22,7 +23,7 @@ class Chatbot {
             this.allStates.set(state.name, state);
             return true;
         } else {
-            throw new Error(`Given parameter is not of type ChatbotState.`);
+            throw new Error(`Given parameter is not an instance of ChatbotState.`);
         }
     }
     getState(stateName) {
@@ -35,39 +36,31 @@ class Chatbot {
             this.currentState = this.allStates.get(stateName);
             return true;
         } else {
-            throw new Error(`State with given name (${stateName}) does not exist.`);
+            throw new Error(`ChatbotState with given name (${stateName}) does not exist.`);
         }
     }
 
     // ----- IMPORT/EXPORT ----- //
-    async importStates(stateJson, callback = null) {
-        const ChatbotState = require('./ChatbotState');
-        let arr = JSON.parse(stateJson);
+    async importStates(exportedStatesString) {
+        let arr = JSON.parse(exportedStatesString);
         for (let i = 0; i < arr.length; i++) {
             // for each state
             let state = new ChatbotState(arr[i].name);
-            // read only answers and suggestions, skip actions
+            // read only answers, skip actions
             for (let answerObject of arr[i].answers) {
                 state.addAnswer(answerObject.intent, answerObject.answers);
             }
-            for (let suggestionObject of arr[i].suggestions) {
-                state.addAnswer(suggestionObject.intent, suggestionObject.suggestions);
-            }
             this.addState(state);
-        }
-        if (callback != null) {
-            callback();
         }
     }
 
-    async importStatesWithActions(stateJson, callback = null) {
+    async importStatesWithActions(exportedStatesString) {
         console.warn(`This feature converts strings from JSON format into executable code. If the source of this is not trusted, it might be harmful or cause many errors. Please only use this if you know what you are doing!`);
-        const ChatbotState = require('./ChatbotState');
-        let arr = JSON.parse(stateJson);
+        let arr = JSON.parse(exportedStatesString);
         for (let i = 0; i < arr.length; i++) {
             // for each state
             let state = new ChatbotState(arr[i].name);
-            // read actions, answers & suggestions
+            // read actions & answers
             for (let actionObject of arr[i].actions) {
                 let funcTemp = new Function(actionObject.paramName, actionObject.functionCode);
                 state.addAction(actionObject.intent, funcTemp);
@@ -75,21 +68,16 @@ class Chatbot {
             for (let answerObject of arr[i].answers) {
                 state.addAnswer(answerObject.intent, answerObject.answers);
             }
-            for (let suggestionObject of arr[i].suggestions) {
-                state.addAnswer(suggestionObject.intent, suggestionObject.suggestions);
-            }
             this.addState(state);
-        }
-        if (callback != null) {
-            callback();
         }
     }
 
-    async exportStates(callback = null) {
+    async exportStates() {
         let stateArray = [];
         for (let [name, state] of this.allStates) {
             // start STATE
             let stateString = `{"name":"${name.replace(/\"/g, "\\\"")}",`;
+
             // start ANSWERS
             stateString += `"answers":[`;
             let answerArray = [];
@@ -103,37 +91,23 @@ class Chatbot {
                 answerArray.push(answerString);
             }
             stateString += answerArray.join(",");
-            stateString += `],`; // end ANSWERS
-            // start SUGGESTIONS
-            stateString += `"suggestions":[`;
-            let suggestionArray = [];
-            for (let [intent, suggestions] of state.suggestions) {
-                let suggestionString = `{"intent":"${intent.replace(/\"/g, "\\\"")}","suggestions":[`;
-                for (let i in suggestions) {
-                    suggestions[i] = `"${suggestions[i].replace(/\"/g, "\\\"")}"`;
-                }
-                suggestionString += suggestions.join(",");
-                suggestionString += `]},`;
-                suggestionArray.push(suggestionString);
-            }
-            stateString += suggestionArray.join(",");
-            stateString += `]`; // end SUGGESTIONS
-            stateString += `}`; // end STATE
+            stateString += `],`;
+            // end ANSWERS
+
+            stateString += `}`;
+            // end STATE
             stateArray.push(stateString);
         }
-        let exportJson = `[` + stateArray.join(",") + `]`;
-        if (callback != null) {
-            callback(exportJson);
-        }
-        return exportJson;
+        return `[${stateArray.join(",")}]`;
     }
     
-    async exportStatesWithActions(callback = null) {
+    async exportStatesWithActions() {
         console.warn("This feature converts executable code into strings. If this code is reused without proper checks, it may cause many errors. Please only use this if you know what you are doing!");
         let stateArray = [];
         for (let [name, state] of this.allStates) {
             // start STATE
             let stateString = `{"name":"${name.replace(/\"/g, "\\\"")}",`;
+
             // start ACTIONS
             stateString += `"actions":[`;
             let actionArray = [];
@@ -150,7 +124,9 @@ class Chatbot {
                                 + `"functionCode":"${funcString.replace(/\"/g, "\\\"")}"}`);
             }
             stateString += actionArray.join(",");
-            stateString += `],`; // end ACTIONS
+            stateString += `],`;
+            // end ACTIONS
+
             // start ANSWERS
             stateString += `"answers":[`;
             let answerArray = [];
@@ -164,44 +140,30 @@ class Chatbot {
                 answerArray.push(answerString);
             }
             stateString += answerArray.join(",");
-            stateString += `],`; // end ANSWERS
-            // start SUGGESTIONS
-            stateString += `"suggestions":[`;
-            let suggestionArray = [];
-            for (let [intent, suggestions] of state.suggestions) {
-                let suggestionString = `{"intent":"${intent.replace(/\"/g, "\\\"")}","suggestions":[`;
-                for (let i in suggestions) {
-                    suggestions[i] = `"${suggestions[i].replace(/\"/g, "\\\"")}"`;
-                }
-                suggestionString += suggestions.join(",");
-                suggestionString += `]},`;
-                suggestionArray.push(suggestionString);
-            }
-            stateString += suggestionArray.join(",");
-            stateString += `]`; // end SUGGESTIONS
-            stateString += `}`; // end STATE
+            stateString += `],`;
+            // end ANSWERS
+
+            stateString += `}`;
+            // end STATE
             stateArray.push(stateString);
         }
-        let exportJson = `[` + stateArray.join(",") + `]`;
-        if (callback != null) {
-            callback(exportJson);
-        }
-        return exportJson;
+        return `[${stateArray.join(",")}]`;
     }
 
     // ----- HANDLER ----- //
-    async handle(sentence, callback = null) {
+    async process(utterance) {
         // async always returns result wrapped in Promise
         if (this.currentState == null) {
             throw new Error("No state has been selected.");
         }
-        let intent = await this.extractIntent(sentence);
-        let response = await this.currentState.handle(intent);
-        // return Promise if callback is null
-        if (callback != null) {
-            callback(response);
-        }
-        return response;
+        let nlpResult = await this.extractIntent(utterance);
+        let answers = await this.currentState.handle(nlpResult.intent);
+        return {
+            utterance: utterance,
+            intent: nlpResult.intent,
+            score: nlpResult.score,
+            answers: answers,
+        };
     }
 }
 

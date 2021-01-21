@@ -52,7 +52,6 @@
                             <li><a href="#prop_name">name</a></li>
                             <li><a href="#prop_actions">actions</a></li>
                             <li><a href="#prop_answers">answers</a></li>
-                            <li><a href="#prop_suggestions">suggestions</a></li>
                         </ul>
                     </div>
                     <div class="col">
@@ -60,8 +59,7 @@
                         <ul>
                             <li><a href="#method_addAction">addAction</a></li>
                             <li><a href="#method_addAnswer">addAnswer</a></li>
-                            <li><a href="#method_addSuggestion">addSuggestion</a></li>
-                            <li><a href="#method_handle">handle</a></li>
+                            <li><a href="#method_process">process</a></li>
                         </ul>
                     </div>
                 </div>
@@ -75,19 +73,13 @@
                     </div>
                     <h3 id="prop_actions">.actions</h3>
                     <div class="prop-method-description">
-                        Mapa koja sadrži akcije dodijeljene namjerama. Ključ je namjera, vrijednost je akcija. Kada se metoda <span class="params">handle</span> pozove s namjerom koja postoji u ovoj mapi, odgovarajuća akcija se poziva s ovim stanjem kao parametrom.
+                        Mapa koja sadrži akcije dodijeljene namjerama. Ključ je namjera, vrijednost je akcija. Kada se metoda <span class="params">process</span> pozove s namjerom koja postoji u ovoj mapi, odgovarajuća akcija se poziva s ovim stanjem kao parametrom.
                         <br />
                         <span class="gray-bold">Tip: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a>&gt;</span>
                     </div>
                     <h3 id="prop_answers">.answers</h3>
                     <div class="prop-method-description">
-                        Mapa koja sadrži odgovore dodijeljene namjerama. Ključ je namjera, vrijednost je polje odgovora (više odgovora može biti dodijeljeno istoj namjeri). Kada se metoda <span class="params">handle</span> pozove s namjerom iz ove mape, svi odgovarajući odgovori (cijelo polje) se vraćaju kao dio rezultata. Napomena: ako se koristi funkcionalnost uvoza/izvoza, odgovori bi trebali biti stringovi (jer se kod uvoza i izvoza tako koriste).
-                        <br />
-                        <span class="gray-bold">Tip: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;any&gt;&gt;</span>
-                    </div>
-                    <h3 id="prop_suggestions">.suggestions</h3>
-                    <div class="prop-method-description">
-                        Mapa koja sadrži prijedloge dodijeljene namjerama. Ključ je namjera, vrijednost je polje prijedloga (više prijedloga može biti dodijeljeno istoj namjeri). Kada se metoda <span class="params">handle</span> pozove s namjerom iz ove mape, svi odgovarajući prijedlozi (cijelo polje) se vraćaju kao dio rezultata. Napomena: ako se koristi funkcionalnost uvoza/izvoza, prijedlozi bi trebali biti stringovi (jer se kod uvoza i izvoza tako koriste).
+                        Mapa koja sadrži odgovore dodijeljene namjerama. Ključ je namjera, vrijednost je polje odgovora (više odgovora može biti dodijeljeno istoj namjeri). Kada se metoda <span class="params">process</span> pozove s namjerom iz ove mape, svi odgovarajući odgovori (cijelo polje) se vraćaju kao dio rezultata. Napomena: ako se koristi funkcionalnost uvoza/izvoza, odgovori bi trebali biti stringovi (jer se kod uvoza i izvoza tako koriste).
                         <br />
                         <span class="gray-bold">Tip: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;any&gt;&gt;</span>
                     </div>
@@ -154,37 +146,7 @@
                         <br />
                         <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
                     </div>
-                    <h3 id="method_addSuggestion">.addSuggestion( <span class="params">intent, suggestion</span> )</h3>
-                    <div class="prop-method-description">
-                        Koristi se za dodavanja prijedloga koji se trebaju vratiti za zadanu namjeru. Ako je zadani prijedlog polje, svi elementi polja se dodaju umjesto dodavanja samog polja kao prijedloga. Vraća true ako prije nije bilo prijedloga za zadanu namjeru, inače vraća false.
-                        <br />
-                        <div class="table-wrapper">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Parametar</th>
-                                        <th>Tip</th>
-                                        <th>Opis</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>intent</td>
-                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></td>
-                                        <td>Namjera koju treba prepoznati</td>
-                                    </tr>
-                                    <tr>
-                                        <td>suggestion</td>
-                                        <td><span class="gray-bold">any</span> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;<span class="gray-bold">any</span>&gt;</td>
-                                        <td>Prijedlog (ili prijedlozi) koji se vraća za zadanu namjeru</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <br />
-                        <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
-                    </div>
-                    <h3 id="method_handle">.handle( <span class="params">intent</span> )</h3>
+                    <h3 id="method_process">.process( <span class="params">intent</span> )</h3>
                     <div class="prop-method-description">
                         Obrađuje namjeru. Poziva ju konverzacijski agent (Chatbot) kada je ovo stanje trenutno stanje agenta. Izvršava odgovarajuću akciju za namjeru (ako postoji) i vraća namjeru s zadanim odgovorima i prijedlozima (ako su definirani).
                         <br />
@@ -207,7 +169,7 @@
                             </table>
                         </div>
                         <br />
-                        <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;{intent, answers, suggestions}&gt;</span>
+                        <span class="gray-bold">Povratna vrijednost: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;any[]&gt;</span>
                     </div>
                 </div>
             </div>

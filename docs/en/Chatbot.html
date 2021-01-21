@@ -23,7 +23,7 @@
             </nav>
             <div class="view">
                 <h1>Chatbot</h1>
-                <p>Represents a chatbot instance that can be used to handle messages.</p>
+                <p>Represents a chatbot instance that can be used to process messages.</p>
                 <h2>Constructor</h2>
                 <p class="code break-all"><span class="magenta-letters">new</span> Chatbot(intentExtractionFunction);</p>
                 <div class="table-wrapper">
@@ -63,7 +63,7 @@
                             <li><a href="#method_importStatesWithActions">importStatesWithActions</a></li>
                             <li><a href="#method_exportStates">exportStates</a></li>
                             <li><a href="#method_exportStatesWithActions">exportStatesWithActions</a></li>
-                            <li><a href="#method_handle">handle</a></li>
+                            <li><a href="#method_process">process</a></li>
                         </ul>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                     <h2>Properties</h2>
                     <h3 id="prop_extractIntent">.extractIntent</h3>
                     <div class="prop-method-description">
-                        Function that was given to Chatbot through constructor. This Chatbot instance will use this function when determining intent from a given sentence.
+                        Function that was given to Chatbot through constructor. This Chatbot instance will use it when determining intent from a given utterance. The function takes utterance (a string) as a parameter, and returns an object with the properties: 'utterance', 'intent', 'score'.
                         <br />
                         <span class="gray-bold">Type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>
                     </div>
@@ -83,7 +83,7 @@
                     </div>
                     <h3 id="prop_currentState">.currentState</h3>
                     <div class="prop-method-description">
-                        The currently active state. This state is used for handling the intent of a sentence (gettting the answers and suggestions).
+                        The currently active state. This state is used for processing the intent of an utterance (gettting the answers and suggestions).
                         <br />
                         <span class="gray-bold">Type: <a href="./ChatbotState.html">ChatbotState</a></span>
                     </div>
@@ -165,9 +165,9 @@
                         <br />
                         <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>
                     </div>
-                    <h3 id="method_importStates">.importStates( <span class="params">stateJson, [callback]</span> )</h3>
+                    <h3 id="method_importStates">.importStates( <span class="params">stateJson</span> )</h3>
                     <div class="prop-method-description">
-                        Imports chatbot states with answers and suggestions, skipping actions. The JSON used should be the result of a previously called <span class="params">exportStates</span> or <span class="params">exportStatesWithActions</span> method. If a callback method is provided, the callback is called with no parameters. Otherwise, the function returns a Promise which resolves with nothing (undefined).
+                        Imports chatbot states with answers and suggestions, skipping actions. The JSON used should be the result of a previously called <span class="params">exportStates</span> or <span class="params">exportStatesWithActions</span> method. The function returns a Promise which resolves with nothing (undefined).
                         <br />
                         <div class="table-wrapper">
                             <table>
@@ -175,7 +175,6 @@
                                     <tr>
                                         <th>Parameter</th>
                                         <th>Type</th>
-                                        <th>Optional</th>
                                         <th>Description</th>
                                     </tr>
                                 </thead>
@@ -183,24 +182,17 @@
                                     <tr>
                                         <td>stateJson</td>
                                         <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></td>
-                                        <td></td>
                                         <td>JSON containing states with answers and suggestions</td>
                                     </tr>
-                                    <tr>
-                                        <td>callback</td>
-                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
-                                        <td>&#x2714;</td>
-                                        <td>Callback function</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                         <br />
                         <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>&gt;</span>
                     </div>
-                    <h3 id="method_importStatesWithActions">.importStatesWithActions( <span class="params">stateJson, [callback]</span> )</h3>
+                    <h3 id="method_importStatesWithActions">.importStatesWithActions( <span class="params">stateJson</span> )</h3>
                     <div class="prop-method-description">
-                        Imports chatbot states with everything: actions, answers and suggestions. Because actions are text that will become executable code, this method should be used with extra caution. Only use this if the provided JSON is your own or from a trusted source. The JSON used should be the result of a previously called <span class="params">exportStates</span> or <span class="params">exportStatesWithActions</span> method. If a callback method is provided, the callback is called with no parameters. Otherwise, the function returns a Promise which resolves with nothing (undefined).
+                        Imports chatbot states with everything: actions, answers and suggestions. Because actions are text that will become executable code, this method should be used with extra caution. Only use this if the provided JSON is your own or from a trusted source. The JSON used should be the result of a previously called <span class="params">exportStates</span> or <span class="params">exportStatesWithActions</span> method. The function returns a Promise which resolves with nothing (undefined).
                         <br />
                         <div class="table-wrapper">
                             <table>
@@ -208,7 +200,6 @@
                                     <tr>
                                         <th>Parameter</th>
                                         <th>Type</th>
-                                        <th>Optional</th>
                                         <th>Description</th>
                                     </tr>
                                 </thead>
@@ -216,14 +207,7 @@
                                     <tr>
                                         <td>stateJson</td>
                                         <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a></td>
-                                        <td></td>
                                         <td>JSON containing states with actions, answers and suggestions</td>
-                                    </tr>
-                                    <tr>
-                                        <td>callback</td>
-                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
-                                        <td>&#x2714;</td>
-                                        <td>Callback function</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -231,63 +215,21 @@
                         <br />
                         <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>&gt;</span>
                     </div>
-                    <h3 id="method_exportStates">.exportStates( <span class="params">[callback]</span> )</h3>
+                    <h3 id="method_exportStates">.exportStates( )</h3>
                     <div class="prop-method-description">
-                        Exports all states of the chatbot in JSON form. Exported states contain only answers and suggestions without actions. If a callback function is provided, it is called with the resulting JSON. Otherwise, the function returns a Promise which resolves with the resulting JSON.
-                        <br />
-                        <div class="table-wrapper">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Parameter</th>
-                                        <th>Type</th>
-                                        <th>Optional</th>
-                                        <th>Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>callback</td>
-                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
-                                        <td>&#x2714;</td>
-                                        <td>Callback function</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        Exports all states of the chatbot in JSON form. Exported states contain only answers and suggestions without actions. The function returns a Promise which resolves with the resulting JSON.
                         <br />
                         <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a>&gt;</span>
                     </div>
-                    <h3 id="method_exportStatesWithActions">.exportStatesWithActions( <span class="params">[callback]</span> )</h3>
+                    <h3 id="method_exportStatesWithActions">.exportStatesWithActions( )</h3>
                     <div class="prop-method-description">
-                        Exports all states of the chatbot in JSON form. Exported states contain everything: actions, answers and suggestions. Because actions are executable code converted from text, importing the resulting JSON should be done with extra caution. If a callback function is provided, it is called with the resulting JSON. Otherwise, the function returns a Promise which resolves with the resulting JSON.
-                        <br />
-                        <div class="table-wrapper">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Parameter</th>
-                                        <th>Type</th>
-                                        <th>Optional</th>
-                                        <th>Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>callback</td>
-                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
-                                        <td>&#x2714;</td>
-                                        <td>Callback function</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        Exports all states of the chatbot in JSON form. Exported states contain everything: actions, answers and suggestions. Because actions are executable code converted from text, importing the resulting JSON should be done with extra caution. The function returns a Promise which resolves with the resulting JSON.
                         <br />
                         <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">JSON</a>&gt;</span>
                     </div>
-                    <h3 id="method_handle">.handle( <span class="params">sentence, [callback]</span> )</h3>
+                    <h3 id="method_process">.process( <span class="params">utterance</span> )</h3>
                     <div class="prop-method-description">
-                        Handles the user message. First, the internal <span class="param">extractIntent</span> method is called to get the intent from the <span class="param">sentence</span> parameter. Then the resulting intent is used to call the current states <span class="param">handle</span> method. If a callback function is provided, it is called with the resulting object. Otherwise, the function returns a Promise which resolves with the resulting object.
+                        Processes the user message. First, the internal <span class="params">extractIntent</span> method is called to get the intent from the <span class="params">utterance</span> parameter. Then the resulting intent is used to call the current states <span class="params">process</span> method. The function returns a Promise which resolves with the resulting object.
                         <br />
                         <div class="table-wrapper">
                             <table>
@@ -295,28 +237,20 @@
                                     <tr>
                                         <th>Parameter</th>
                                         <th>Type</th>
-                                        <th>Optional</th>
                                         <th>Description</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>sentence</td>
+                                        <td>utterance</td>
                                         <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></td>
-                                        <td></td>
-                                        <td>Message from the user to be handled</td>
-                                    </tr>
-                                    <tr>
-                                        <td>callback</td>
-                                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></td>
-                                        <td>&#x2714;</td>
-                                        <td>Callback function</td>
+                                        <td>Message from the user to be processed</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <br />
-                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;{intent, answers, suggestions}&gt;</span>
+                        <span class="gray-bold">Returns: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;{utterance, intent, score, answers}&gt;</span>
                     </div>
                 </div>
             </div>

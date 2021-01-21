@@ -1,5 +1,5 @@
-const Chatbot = require('./Chatbot');
-const ChatbotState = require('./ChatbotState');
+const Chatbot = require('./src/Chatbot');
+const ChatbotState = require('./src/ChatbotState');
 
 module.exports = {
     Chatbot,
