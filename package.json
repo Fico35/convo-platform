@@ -1,6 +1,6 @@
 {
   "name": "convo-platform",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Small nodejs package that will make building chatbots easier.",
   "main": "index.js",
   "repository": {
