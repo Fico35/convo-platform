@@ -24,8 +24,9 @@ export type chatbotProcessResult = {
 
 export declare class Chatbot {
     constructor(intentExtractionFunction: (utterance: string) => Promise<nlpResult>);
-    extractIntent(utterance: string): Promise<nlpResult>;
+    async extractIntent(utterance: string): Promise<nlpResult>;
     allStates: Map<string, ChatbotState>;
+    currentState: ChatbotState;
     addState(state: ChatbotState): boolean;
     getState(stateName: string): ChatbotState;
     setCurrentState(stateName: string): boolean;

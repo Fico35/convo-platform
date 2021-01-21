@@ -21,6 +21,10 @@ class Chatbot {
         if (state instanceof ChatbotState) {
             state.chatbot = this;   // add chatbot reference to state
             this.allStates.set(state.name, state);
+            if (this.currentState == null) {
+                // if no current state is set, set the new state as the current one
+                this.currentState = state;
+            }
             return true;
         } else {
             throw new Error(`Given parameter is not an instance of ChatbotState.`);
