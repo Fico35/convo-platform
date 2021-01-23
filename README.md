@@ -64,6 +64,12 @@ firstState.addAction("feeling.positive", (state) => {
 });
 ```
 
+After defining your state, don't forget to add it to the `Chatbot` (you can do this immediately after creating the `ChatbotState` as well, since only the reference is passed).
+
+```javascript
+bot.addState(firstState);
+```
+
 Then, when the bot is set up, you can simply call the `process` function with your sentence to retrieve the result.
 This function is asynchronous, so it returns a `Promise`.
 The `Promise` resolves into an object with `{utterance, intent, score, answers}` properties.
